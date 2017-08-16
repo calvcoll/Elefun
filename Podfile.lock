@@ -1,0 +1,15 @@
+PODS:
+  - Kanna (2.1.1)
+  - MastodonKit (1.0.10)
+
+DEPENDENCIES:
+  - Kanna (~> 2.1.0)
+  - MastodonKit (~> 1.0)
+
+SPEC CHECKSUMS:
+  Kanna: 9b4b086c218703f2b94f5b21a466217dd2f9332e
+  MastodonKit: 573c2b32491108599aef4d99addb0e13a154cd6a
+
+PODFILE CHECKSUM: 6de13c2f8b6970d29f6ef1e09327a10fcb7f3e47
+
+COCOAPODS: 1.2.1
