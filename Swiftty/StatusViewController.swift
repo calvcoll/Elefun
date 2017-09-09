@@ -191,7 +191,7 @@ class StatusViewController: UIViewController {
         // Get the new view controller using segue.destinationViewController.
         // Pass the selected object to the new view controller.
         if segue.identifier == "replySelect" {
-            if let cell = sender as? StatusTableViewCell, let destination = segue.destination as? StatusViewController{
+            if let cell = sender as? NotificationTableViewCell, let destination = segue.destination as? StatusViewController{
                 let reply = descendants[cell.index]
                 destination.status = reply
                 destination.client = client

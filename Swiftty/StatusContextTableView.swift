@@ -46,13 +46,25 @@ class StatusContextTableView: UITableView, UITableViewDelegate, UITableViewDataS
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: StatusViewController.CELL_NAME, for: indexPath) as? StatusTableViewCell else {
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: StatusViewController.CELL_NAME, for: indexPath) as? NotificationTableViewCell else {
             print("cell isn't a status view cell")
             return tableView.dequeueReusableCell(withIdentifier: StatusViewController.CELL_NAME, for: indexPath)
         }
         
-        let status = statuses[indexPath.row]
+        var status = statuses[indexPath.row]
         cell.index = indexPath.row
+        
+        if status.reblog != nil {
+            Helper.DownloadImageToView(url: status.account.avatar, view: cell.relatedAvatarView)
+            cell.relatedAvatarView.isHidden = false
+            cell.typeView.image = UIImage(named: "reblog")
+            cell.typeView.isHidden = false
+            
+            status = status.reblog!
+        } else {
+            cell.relatedAvatarView.isHidden = true
+            cell.typeView.isHidden = true
+        }
         
         if status.account.displayName.isEmpty {
             cell.userLabel.text = status.account.acct // use username if displayname is empty
@@ -64,6 +76,7 @@ class StatusContextTableView: UITableView, UITableViewDelegate, UITableViewDataS
         
         Helper.DownloadImageToView(url: status.account.avatar, view: cell.avatarView!)
 
+        cell.setNeedsDisplay()
         
         return cell
     }

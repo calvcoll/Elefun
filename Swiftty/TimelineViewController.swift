@@ -29,9 +29,11 @@ class TimelineViewController: UIViewController, UITableViewDelegate, UITableView
         super.viewWillDisappear(animated)
         
         /////////////////////////////////////////////////
-        let store = StatusStore(statuses: self.statuses, lastStatus: self.statuses.last!) // fix to be top of view once scrolled
-        if let store = store {
-            StatusStore.saveStatuses(info: store)
+        if (self.statuses.count > 0) {
+            let store = StatusStore(statuses: self.statuses, lastStatus: self.statuses.last!) // fix to be top of view once scrolled
+            if let store = store {
+                StatusStore.saveStatuses(info: store)
+            }
         }
     }
 
@@ -78,6 +80,9 @@ class TimelineViewController: UIViewController, UITableViewDelegate, UITableView
     
     func getStatuses () {
         client.run(Timelines.home()) { (statuses, error) in
+            if self.tableView.refreshControl != nil {
+                self.tableView.refreshControl!.endRefreshing()
+            }
             if error != nil {
                 print(error!)
                 return
@@ -95,9 +100,6 @@ class TimelineViewController: UIViewController, UITableViewDelegate, UITableView
                     self.statuses.insert(contentsOf: statuses, at: 0)
                 }
                 DispatchQueue.main.async(execute: {self.tableView.reloadData()})
-            }
-            if self.tableView.refreshControl != nil {
-                self.tableView.refreshControl!.endRefreshing()
             }
         }
         
@@ -130,9 +132,9 @@ class TimelineViewController: UIViewController, UITableViewDelegate, UITableView
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: "StatusViewCell", for: indexPath) as? StatusTableViewCell else {
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: "NotificationViewCell", for: indexPath) as? NotificationTableViewCell else {
             print("cell isn't a status view cell")
-            return tableView.dequeueReusableCell(withIdentifier: "StatusViewCell", for: indexPath)
+            return tableView.dequeueReusableCell(withIdentifier: "NotificationViewCell", for: indexPath)
         }
         
         var status = statuses[indexPath.row]
@@ -140,7 +142,15 @@ class TimelineViewController: UIViewController, UITableViewDelegate, UITableView
         cell.index = indexPath.row
         
         if status.reblog != nil {
+            Helper.DownloadImageToView(url: status.account.avatar, view: cell.relatedAvatarView)
+            cell.relatedAvatarView.isHidden = false
+            cell.typeView.image = UIImage(named: "reblog")
+            cell.typeView.isHidden = false
+            
             status = status.reblog!
+        } else {
+            cell.relatedAvatarView.isHidden = true
+            cell.typeView.isHidden = true
         }
         
         if status.account.displayName.isEmpty {
@@ -151,6 +161,8 @@ class TimelineViewController: UIViewController, UITableViewDelegate, UITableView
         cell.statusLabel.text = Helper.ExtractContent(content: Helper.EscapeString(string: status.content))
         
         Helper.DownloadImageToView(url: status.account.avatar, view: cell.avatarView!)
+        
+        cell.setNeedsDisplay()
         
         return cell
         
@@ -163,7 +175,7 @@ class TimelineViewController: UIViewController, UITableViewDelegate, UITableView
 
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if let destination = segue.destination as? StatusViewController {
-            let cell = sender as! StatusTableViewCell
+            let cell = sender as! NotificationTableViewCell
             let status = statuses[cell.index]
             destination.status = status
             destination.client = client

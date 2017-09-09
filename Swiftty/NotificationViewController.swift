@@ -63,6 +63,9 @@ class NotficationViewController: UITableViewController {
     
     func getStatuses () {
         client.run(Notifications.all()) { (notifications, error) in
+            if self.refreshControl != nil {
+                self.refreshControl!.endRefreshing()
+            }
             if error != nil {
                 print(error!)
                 return
@@ -80,9 +83,6 @@ class NotficationViewController: UITableViewController {
                     self.notifications.insert(contentsOf: notifications, at: 0)
                 }
                 DispatchQueue.main.async(execute: {self.tableView.reloadData()})
-            }
-            if self.refreshControl != nil {
-                self.refreshControl!.endRefreshing()
             }
         }
         
@@ -133,8 +133,12 @@ class NotficationViewController: UITableViewController {
                 }
                 user += " has liked your status!"
                 cell.userLabel.text = user
-            case .follow: break
-            case .mention: break
+            case .follow:
+                cell.relatedAvatarView.isHidden = true
+                cell.typeView.isHidden = true
+            case .mention:
+                cell.relatedAvatarView.isHidden = true
+                cell.typeView.isHidden = true
             case .reblog:
                 Helper.DownloadImageToView(url: notification.account.avatar, view: cell.relatedAvatarView)
                 cell.relatedAvatarView.isHidden = false
@@ -152,6 +156,8 @@ class NotficationViewController: UITableViewController {
             if (notification.type == NotificationType.follow) {
                 cell.userLabel.text = notification.account.acct
                 cell.statusLabel.text = "has followed you!"
+                cell.relatedAvatarView.isHidden = true
+                cell.typeView.isHidden = true
                 
                 Helper.DownloadImageToView(url: notification.account.avatar, view: cell.avatarView!)
             }

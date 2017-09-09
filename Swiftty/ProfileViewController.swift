@@ -181,7 +181,7 @@ class ProfileViewController: UIViewController {
         // Pass the selected object to the new view controller.
         
         if segue.identifier == "selectProfileStatus" {
-            if let cell = sender as? StatusTableViewCell, let destination = segue.destination as? StatusViewController{
+            if let cell = sender as? NotificationTableViewCell, let destination = segue.destination as? StatusViewController{
                 let toot = toots[cell.index]
                 destination.status = toot
                 destination.client = client
