@@ -26,7 +26,7 @@ class WebViewController: UIViewController {
         // Do any additional setup after loading the view.
     }
     
-    func openInSafari(sender: Any?) {
+    @objc func openInSafari(sender: Any?) {
         UIApplication.shared.open(URL(string: self.url)!, options: [:], completionHandler: { (success) in
             if !success {
                 Helper.createAlert(controller: self, title: "Can't open", message: "Can't open URL", preferredStyle: .alert)

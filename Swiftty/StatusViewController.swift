@@ -131,7 +131,7 @@ class StatusViewController: UIViewController {
         self.avatarView!.addGestureRecognizer(avatarTap)
     }
     
-    func onAvatarTap (_ sender: Any?) {
+    @objc func onAvatarTap (_ sender: Any?) {
         performSegue(withIdentifier: "openProfileFromStatus", sender: self.avatarView!)
     }
     
@@ -179,7 +179,7 @@ class StatusViewController: UIViewController {
         }
     }
     
-    func replyToStatus(sender: Any?) {
+    @objc func replyToStatus(sender: Any?) {
         performSegue(withIdentifier: "replyTo", sender: sender)
     }
     

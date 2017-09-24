@@ -57,7 +57,7 @@ class TimelineViewController: UIViewController, UITableViewDelegate, UITableView
         self.tableView.refreshControl!.addTarget(self, action: #selector(refresh(refreshControl:)), for: UIControlEvents.valueChanged)
     }
     
-    func refresh(refreshControl: UIRefreshControl) {
+    @objc func refresh(refreshControl: UIRefreshControl) {
         getStatuses()
     }
     
@@ -80,8 +80,10 @@ class TimelineViewController: UIViewController, UITableViewDelegate, UITableView
     
     func getStatuses () {
         client.run(Timelines.home()) { (statuses, error) in
-            if self.tableView.refreshControl != nil {
-                self.tableView.refreshControl!.endRefreshing()
+            DispatchQueue.main.async {
+                if self.tableView.refreshControl != nil {
+                    self.tableView.refreshControl!.endRefreshing()
+                }
             }
             if error != nil {
                 print(error!)
@@ -115,8 +117,10 @@ class TimelineViewController: UIViewController, UITableViewDelegate, UITableView
                 self.statuses.append(contentsOf: statuses!)
                 DispatchQueue.main.async(execute: {self.tableView.reloadData()})
             }
-            if self.tableView.refreshControl != nil {
-                self.tableView.refreshControl!.endRefreshing()
+            DispatchQueue.main.async {
+                if self.tableView.refreshControl != nil {
+                    self.tableView.refreshControl!.endRefreshing()
+                }
             }
             self.loaded = true
         }
@@ -167,6 +171,12 @@ class TimelineViewController: UIViewController, UITableViewDelegate, UITableView
         return cell
         
     }
+    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+        if loaded && indexPath.row == statuses.count-1 {
+            getStatusesFrom(statuses.last!)
+            loaded = false
+        }
+    }
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
@@ -187,6 +197,7 @@ class TimelineViewController: UIViewController, UITableViewDelegate, UITableView
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         //scrollview is at bottom
         if !statuses.isEmpty {
+            // doesnt work on ios11 (or maybe just iphone x)
             if (Int(scrollView.contentOffset.y + scrollView.frame.size.height) == Int(scrollView.contentSize.height + scrollView.contentInset.bottom)) {
                 print("scroll at bottom, loaded = \(loaded)")
                 if loaded {

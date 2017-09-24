@@ -70,11 +70,11 @@ class ProfileViewController: UIViewController {
         self.followBackImage.isHidden = true
     }
     
-    func onHeaderTap (_ sender: Any?) {
+    @objc func onHeaderTap (_ sender: Any?) {
         performSegue(withIdentifier: "openHeaderImageLink", sender: self.avatarView!)
     }
     
-    func onAvatarTap (_ sender: Any?) {
+    @objc func onAvatarTap (_ sender: Any?) {
         performSegue(withIdentifier: "openProfileImageLink", sender: self.avatarView!)
     }
 

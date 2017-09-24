@@ -128,9 +128,11 @@ class Helper {
     
     class func createAlert(controller: UIViewController
         , title: String, message: String, preferredStyle: UIAlertControllerStyle) {
-        let alert = UIAlertController(title: title, message: message, preferredStyle: preferredStyle)
-        alert.addAction(UIAlertAction(title: "OK", style:UIAlertActionStyle.default, handler: nil))
-        controller.present(alert, animated: true, completion: nil)
+        DispatchQueue.main.async {
+            let alert = UIAlertController(title: title, message: message, preferredStyle: preferredStyle)
+            alert.addAction(UIAlertAction(title: "OK", style:UIAlertActionStyle.default, handler: nil))
+            controller.present(alert, animated: true, completion: nil)
+        }
     }
     
     private class func fixPTags(string: String) -> String {

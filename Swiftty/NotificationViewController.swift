@@ -40,7 +40,7 @@ class NotficationViewController: UITableViewController {
         
     }
     
-    func refresh(refreshControl: UIRefreshControl) {
+    @objc func refresh(refreshControl: UIRefreshControl) {
         getStatuses()
     }
     
@@ -63,8 +63,10 @@ class NotficationViewController: UITableViewController {
     
     func getStatuses () {
         client.run(Notifications.all()) { (notifications, error) in
-            if self.refreshControl != nil {
-                self.refreshControl!.endRefreshing()
+            DispatchQueue.main.async {
+                if self.refreshControl != nil {
+                    self.refreshControl!.endRefreshing()
+                }
             }
             if error != nil {
                 print(error!)

@@ -24,6 +24,9 @@ class RootViewController: UIViewController {
     @IBOutlet weak var domainText: UITextField!
     @IBOutlet weak var indicator: UIActivityIndicatorView!
     
+    private var username = ""
+    private var password = ""
+    
     static let LOGIN_SEGUE = "login_segue"
     static let CLIENT_NAME = "Swiftty"
     static let REDIRECT_URI = "urn:ietf:wg:oauth:2.0:oob" // specified by mastodon
@@ -89,31 +92,33 @@ class RootViewController: UIViewController {
         let postString = "client_name=\(RootViewController.CLIENT_NAME)&redirect_uris=\(RootViewController.REDIRECT_URI)&scopes=\(RootViewController.PERMISSIONS)"
         request.httpBody = postString.data(using: .utf8)
         let task = URLSession.shared.dataTask(with: request) { data, response, error in
-            guard let data = data, error == nil else {                                                 // check for fundamental networking error
-                print("error=\(error!)")
-                Helper.createAlert(controller: self, title: "Network Error", message: "We couldn't connect to \(url)", preferredStyle: UIAlertControllerStyle.alert)
-                return
-            }
-            
-            if let httpStatus = response as? HTTPURLResponse, httpStatus.statusCode != 200 {           // check for http errors
-                print("statusCode should be 200, but is \(httpStatus.statusCode)")
-                print("response = \(response!)")
-                
-                if httpStatus.statusCode == 429 {
-                    Helper.createAlert(controller: self, title: "Rate Limited", message: "Sorry you've been rate limited by \(url)", preferredStyle: .alert)
-                }
-            }
-            
-            let responseString = String(data: data, encoding: .utf8)!
-            print("responseString = \(responseString)")
-            if let httpStatus = response as? HTTPURLResponse, httpStatus.statusCode == 200 {
-                let json = try? JSONSerialization.jsonObject(with: data, options: [])
-                
-                if let json_dict = json as? [String: Any] {
-                    RootViewController.MASTODON_SETTINGS = MastodonSettings(url: url, client_id: json_dict["client_id"]! as! String, client_secret: json_dict["client_secret"]! as! String, id: json_dict["id"] as! Int)
+            DispatchQueue.main.async {
+                guard let data = data, error == nil else {                                                 // check for fundamental networking error
+                    print("error=\(error!)")
+                    Helper.createAlert(controller: self, title: "Network Error", message: "We couldn't connect to \(url)", preferredStyle: UIAlertControllerStyle.alert)
+                    return
                 }
                 
-                self.onSecrets(url: url, sender: sender)
+                if let httpStatus = response as? HTTPURLResponse, httpStatus.statusCode != 200 {           // check for http errors
+                    print("statusCode should be 200, but is \(httpStatus.statusCode)")
+                    print("response = \(response!)")
+                    
+                    if httpStatus.statusCode == 429 {
+                        Helper.createAlert(controller: self, title: "Rate Limited", message: "Sorry you've been rate limited by \(url)", preferredStyle: .alert)
+                    }
+                }
+                
+                let responseString = String(data: data, encoding: .utf8)!
+                print("responseString = \(responseString)")
+                if let httpStatus = response as? HTTPURLResponse, httpStatus.statusCode == 200 {
+                    let json = try? JSONSerialization.jsonObject(with: data, options: [])
+                    
+                    if let json_dict = json as? [String: Any] {
+                        RootViewController.MASTODON_SETTINGS = MastodonSettings(url: url, client_id: json_dict["client_id"]! as! String, client_secret: json_dict["client_secret"]! as! String, id: json_dict["id"] as! Int)
+                    }
+                    
+                    self.onSecrets(url: url, sender: sender)
+                }
             }
         }
         task.resume()
@@ -124,28 +129,32 @@ class RootViewController: UIViewController {
             let client = Client(baseURL: url, accessToken: info.accessToken)
             self.afterLogin(client: client, sender: sender)
         } else {
-            let login = Login.silent(
-                clientID: RootViewController.MASTODON_SETTINGS.client_id,
-                clientSecret: RootViewController.MASTODON_SETTINGS.client_secret,
-                scopes: [.read, .write, .follow],
-                username: self.userNameText.text!,
-                password: self.passwordText.text!
-            )
-            
-            let client = Client(baseURL: url)
-            
-            client.run(login) { loginSettings, error in
-                if let loginSettings = loginSettings {
-                    print("log in settings" + loginSettings.accessToken)
-                    let info = AccessInfo(accessToken: loginSettings.accessToken, url: RootViewController.MASTODON_SETTINGS.url, user: self.userNameText.text!)
-                    AccessInfo.saveAccessInfo(info: info!)
-                    
-                    client.accessToken = info!.accessToken
-                    self.afterLogin(client: client, sender: sender)
-                }
-                if error != nil {
-                    Helper.createAlert(controller: self, title: "Username/Password", message: "Username/Password Incorrect", preferredStyle: .alert)
-                    self.onFailure()
+            DispatchQueue.main.async {
+                let login = Login.silent(
+                    clientID: RootViewController.MASTODON_SETTINGS.client_id,
+                    clientSecret: RootViewController.MASTODON_SETTINGS.client_secret,
+                    scopes: [.read, .write, .follow],
+                    username: self.username,
+                    password: self.password
+                )
+                
+                let client = Client(baseURL: url)
+                
+                client.run(login) { loginSettings, error in
+                    DispatchQueue.main.async {
+                        if let loginSettings = loginSettings {
+                            print("log in settings" + loginSettings.accessToken)
+                            let info = AccessInfo(accessToken: loginSettings.accessToken, url: RootViewController.MASTODON_SETTINGS.url, user: self.username)
+                            AccessInfo.saveAccessInfo(info: info!)
+                            
+                            client.accessToken = info!.accessToken
+                            self.afterLogin(client: client, sender: sender)
+                        }
+                        if error != nil {
+                            Helper.createAlert(controller: self, title: "Username/Password", message: "Username/Password Incorrect", preferredStyle: .alert)
+                            self.onFailure()
+                        }
+                    }
                 }
             }
         }
@@ -155,13 +164,15 @@ class RootViewController: UIViewController {
         print(client.accessToken!)
         
         client.run(Accounts.currentUser()) { (account, error) in
-            if (error != nil) {
-                print(error!)
+            DispatchQueue.main.async {
+                if (error != nil) {
+                    print(error!)
+                }
+                if (account != nil) {
+                    print(account!.displayName)
+                }
+                self.performSegue(withIdentifier: RootViewController.LOGIN_SEGUE, sender: sender)
             }
-            if (account != nil) {
-                print(account!.displayName)
-            }
-            self.performSegue(withIdentifier: RootViewController.LOGIN_SEGUE, sender: sender)
         }
     }
     
@@ -172,9 +183,13 @@ class RootViewController: UIViewController {
         indicator.startAnimating()
         let domain = domainText.text!
         let exists = domainExists(url: NSURL(string: prefixHTTP(url: domain))!)
+        
+        username = self.userNameText.text!
+        password = self.passwordText.text!
+        
         print(exists)
         print(domain)
-        if (userNameText.text!.isEmpty || passwordText.text!.isEmpty) {
+        if (username.isEmpty || password.isEmpty) {
             Helper.createAlert(controller: self, title: "No username/password", message: "You haven't entered a username, or a password.", preferredStyle: UIAlertControllerStyle.alert)
             onFailure()
         } else {
@@ -212,11 +227,12 @@ class RootViewController: UIViewController {
 
 extension RootViewController: UITextFieldDelegate {
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        DispatchQueue.main.async(execute: {
-            if self.view != nil {
-                self.view.endEditing(true)
-            }
-        })
+//        DispatchQueue.main.async(execute: {
+//            if self.view != nil {
+//                self.view.endEditing(true)
+//            }
+//        })
+        textField.resignFirstResponder()
         return false
     }
 }
