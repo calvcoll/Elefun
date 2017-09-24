@@ -57,7 +57,7 @@ class TootViewController: UIViewController { //TO-DO: Multiple image semaphore, 
     }
     
     @objc func sendToot (sender: Any?) {
-        if !self.mediaBlock {
+        if self.mediaBlocks.isEmpty {
             if (self.charCount <= 500 && self.charCount > 0) {
                 client.run(Statuses.create(status: tootText.text!, replyToID: replyID, mediaIDs: mediaIDs, spoilerText: spoilerText, visibility: visibilities[visibilityPicker.selectedRow(inComponent: 0)]), completion: { (status, error) in
                         if error != nil {
