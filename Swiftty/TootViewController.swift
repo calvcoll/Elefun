@@ -36,7 +36,7 @@ class TootViewController: UIViewController { //TO-DO: Multiple image semaphore, 
     var replyStatus: Status?
     
     var charCount: Int = 0
-    var mediaBlock: Bool = false
+    var mediaBlocks: [Bool] = []
     
     let imagePickerController = UIImagePickerController()
     
@@ -146,7 +146,7 @@ extension TootViewController: UITextViewDelegate {
 extension TootViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
         if let pickedImage = info[UIImagePickerControllerOriginalImage] as! UIImage? {
-            self.mediaBlock = true
+            self.mediaBlocks.append(true)
             self.uploadingIndicator.startAnimating()
             self.uploadingIndicator.isHidden = false
             let imageData = UIImagePNGRepresentation(pickedImage)
@@ -166,9 +166,11 @@ extension TootViewController: UIImagePickerControllerDelegate, UINavigationContr
                 if error != nil {
                     Helper.createAlert(controller: self.imagePickerController, title: "Upload Failed", message: "Couldn't upload image", preferredStyle: .alert)
                 }
-                self.mediaBlock = false;
-                self.uploadingIndicator.stopAnimating()
-                self.uploadingIndicator.isHidden = true
+                let _ = self.mediaBlocks.popLast();
+                if self.mediaBlocks.isEmpty {
+                    self.uploadingIndicator.stopAnimating()
+                    self.uploadingIndicator.isHidden = true
+                }
             })
             picker.dismiss(animated: true, completion: nil)
         }
