@@ -1,15 +1,25 @@
 PODS:
-  - Kanna (2.1.1)
+  - Kanna (4.0.0)
   - MastodonKit (1.0.10)
 
 DEPENDENCIES:
-  - Kanna (~> 2.1.0)
+  - Kanna (from `https://github.com/tid-kijyun/Kanna.git`, branch `feature/v4.0.0`)
   - MastodonKit (~> 1.0)
 
+EXTERNAL SOURCES:
+  Kanna:
+    :branch: feature/v4.0.0
+    :git: https://github.com/tid-kijyun/Kanna.git
+
+CHECKOUT OPTIONS:
+  Kanna:
+    :commit: 9091f84ed0e39b7fa8536da98a1812c3456bc4e3
+    :git: https://github.com/tid-kijyun/Kanna.git
+
 SPEC CHECKSUMS:
-  Kanna: 9b4b086c218703f2b94f5b21a466217dd2f9332e
+  Kanna: d5ae2a26472f7e7a474e7f36a9cd8aa2c8c63ad3
   MastodonKit: 573c2b32491108599aef4d99addb0e13a154cd6a
 
-PODFILE CHECKSUM: 6de13c2f8b6970d29f6ef1e09327a10fcb7f3e47
+PODFILE CHECKSUM: 7844a422f80999c8e1edd49c89d316249512374f
 
 COCOAPODS: 1.2.1

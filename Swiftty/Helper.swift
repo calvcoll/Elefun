@@ -54,7 +54,29 @@ class Helper {
     
     class func ExtractLinks (content: String) -> [String] {
         var links: [String] = []
-        if let doc = HTML(html: content, encoding: .utf8) {
+//        if let doc = HTML(html: content, encoding: .utf8) {
+//            for link in doc.css("a, link") {
+//                let text = link.text!
+//                if let classes = link["class"] {
+//                    if (classes.contains("mention hashtag")) { //is link to hashtag
+//                        print(text)
+//                    } else if (classes.contains("u-url mention")) { //is link to username mention
+//                        print("mentioning \(text)")
+//                    } else if (classes.isEmpty) {
+//                        links.append(text)
+//                    }
+//                } else {
+////                    if (text.contains("\(accessInfo.url)/media/")) { //media
+////                        print("media \(text)")
+//                    links.append(text)
+////                    } else { // normal url
+////                        print("url \(text)")
+////                    }
+//                }
+//            }
+//        }
+        do {
+            let doc = try HTML(html: content, encoding: .utf8)
             for link in doc.css("a, link") {
                 let text = link.text!
                 if let classes = link["class"] {
@@ -66,14 +88,17 @@ class Helper {
                         links.append(text)
                     }
                 } else {
-//                    if (text.contains("\(accessInfo.url)/media/")) { //media
-//                        print("media \(text)")
+                    //                    if (text.contains("\(accessInfo.url)/media/")) { //media
+                    //                        print("media \(text)")
                     links.append(text)
-//                    } else { // normal url
-//                        print("url \(text)")
-//                    }
+                    //                    } else { // normal url
+                    //                        print("url \(text)")
+                    //                    }
                 }
             }
+        }
+        catch {
+            
         }
         return links
     }
@@ -81,20 +106,29 @@ class Helper {
     class func ExtractContent (content: String) -> String {
         var returnedContent = ""
         let content = fixPTags(string: content)
-        if let doc = HTML(html: content, encoding: .utf8) {
+        
+        
+        do {
+            let doc = try HTML(html: content, encoding: .utf8)
             returnedContent += "\(doc.text!)"
-//            for p in doc.css("p") {
-//                returnedContent += "\(p.text!) \n"
-//            }
-//            if returnedContent.isEmpty {
-//                for a in doc.css("a") {
-//                    returnedContent += "\(a.text!) \n"
-//                }
-//            }
-
-        } else {
+        }
+        catch {
             returnedContent = content
         }
+//        if let doc = HTML(html: content, encoding: .utf8) {
+//            returnedContent += "\(doc.text!)"
+////            for p in doc.css("p") {
+////                returnedContent += "\(p.text!) \n"
+////            }
+////            if returnedContent.isEmpty {
+////                for a in doc.css("a") {
+////                    returnedContent += "\(a.text!) \n"
+////                }
+////            }
+////
+//        } else {
+//            returnedContent = content
+//        }
         return returnedContent
     }
     

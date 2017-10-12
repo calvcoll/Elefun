@@ -133,8 +133,6 @@ class RootViewController: UIViewController {
                     let json = try? JSONSerialization.jsonObject(with: data, options: [])
 
                     if let json_dict = json as? [String: Any] {
-                        print(json_dict["id"])
-                        print(json_dict["id"] as? Int)
                         RootViewController.MASTODON_SETTINGS = MastodonSettings(url: url, client_id: json_dict["client_id"]! as! String, client_secret: json_dict["client_secret"]! as! String, id: Int(json_dict["id"] as! String)!)
                     }
 
