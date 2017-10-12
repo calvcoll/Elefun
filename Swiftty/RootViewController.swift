@@ -87,6 +87,25 @@ class RootViewController: UIViewController {
     func prepareMastodon(url: String, sender: Any) {
         let url = prefixHTTP(url: url)
         
+//        let client = Client(baseURL: url)
+//        let request = Clients.register(
+//            clientName: RootViewController.CLIENT_NAME,
+//            scopes: [.read, .write, .follow]
+//        )
+//
+//        client.run(request) { (app, error) in
+//            if let error = error {
+//                print(error)
+//                self.onFailure()
+//            }
+//            if let app = app {
+//                RootViewController.MASTODON_SETTINGS = MastodonSettings(url: url, client_id: app.clientID, client_secret: app.clientSecret, id: app.id)
+//                self.onSecrets(url: url, sender: sender)
+//            } else {
+//                self.onFailure() // some reason always ends here, leaving for future fix
+//            }
+//        }
+        
         var request = URLRequest(url: URL(string: "\(url)/api/v1/apps")!)
         request.httpMethod = "POST"
         let postString = "client_name=\(RootViewController.CLIENT_NAME)&redirect_uris=\(RootViewController.REDIRECT_URI)&scopes=\(RootViewController.PERMISSIONS)"
@@ -98,25 +117,27 @@ class RootViewController: UIViewController {
                     Helper.createAlert(controller: self, title: "Network Error", message: "We couldn't connect to \(url)", preferredStyle: UIAlertControllerStyle.alert)
                     return
                 }
-                
+
                 if let httpStatus = response as? HTTPURLResponse, httpStatus.statusCode != 200 {           // check for http errors
                     print("statusCode should be 200, but is \(httpStatus.statusCode)")
                     print("response = \(response!)")
-                    
+
                     if httpStatus.statusCode == 429 {
                         Helper.createAlert(controller: self, title: "Rate Limited", message: "Sorry you've been rate limited by \(url)", preferredStyle: .alert)
                     }
                 }
-                
+
                 let responseString = String(data: data, encoding: .utf8)!
                 print("responseString = \(responseString)")
                 if let httpStatus = response as? HTTPURLResponse, httpStatus.statusCode == 200 {
                     let json = try? JSONSerialization.jsonObject(with: data, options: [])
-                    
+
                     if let json_dict = json as? [String: Any] {
-                        RootViewController.MASTODON_SETTINGS = MastodonSettings(url: url, client_id: json_dict["client_id"]! as! String, client_secret: json_dict["client_secret"]! as! String, id: json_dict["id"] as! Int)
+                        print(json_dict["id"])
+                        print(json_dict["id"] as? Int)
+                        RootViewController.MASTODON_SETTINGS = MastodonSettings(url: url, client_id: json_dict["client_id"]! as! String, client_secret: json_dict["client_secret"]! as! String, id: Int(json_dict["id"] as! String)!)
                     }
-                    
+
                     self.onSecrets(url: url, sender: sender)
                 }
             }
@@ -126,6 +147,7 @@ class RootViewController: UIViewController {
     
     func onSecrets(url: String, sender: Any) {
         if let info = AccessInfo.loadAccessInfo() {
+            print("using accessinfo")
             let client = Client(baseURL: url, accessToken: info.accessToken)
             self.afterLogin(client: client, sender: sender)
         } else {

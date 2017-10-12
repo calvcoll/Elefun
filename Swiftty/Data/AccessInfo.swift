@@ -43,6 +43,15 @@ class AccessInfo: NSObject, NSCoding {
         return NSKeyedUnarchiver.unarchiveObject(withFile: AccessInfo.ArchiveURL.path) as? AccessInfo
     }
     
+    class func clearAccessInfo() -> Bool {
+        do {
+            try FileManager.default.removeItem(atPath: AccessInfo.ArchiveURL.path)
+            return true
+        } catch {
+            return false
+        }
+    }
+    
     required convenience init?(coder aDecoder: NSCoder) {
         guard let accessToken = aDecoder.decodeObject(forKey: PropertyKey.accessToken) as? String else {
             os_log("Unable to decode access token", log: OSLog.default, type: .debug)

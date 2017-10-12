@@ -11,6 +11,7 @@
 		A40300B61F2F83F7001621FD /* Helper.swift in Sources */ = {isa = PBXBuildFile; fileRef = A40300B51F2F83F7001621FD /* Helper.swift */; };
 		A40300B81F2F8AE3001621FD /* StatusViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A40300B71F2F8AE3001621FD /* StatusViewController.swift */; };
 		A40300BC1F32779C001621FD /* StatusContextTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A40300BB1F32779C001621FD /* StatusContextTableView.swift */; };
+		A407CAC01F8FFDA300D44CC1 /* MoreTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A407CABF1F8FFDA300D44CC1 /* MoreTableViewController.swift */; };
 		A448F91F1F2DE3130001D2D0 /* NotificationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A448F91E1F2DE3130001D2D0 /* NotificationViewController.swift */; };
 		A44A78EA1F2E2CC90079AB18 /* AccessInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = A44A78E91F2E2CC90079AB18 /* AccessInfo.swift */; };
 		A44A78EC1F2F48480079AB18 /* StatusTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A44A78EB1F2F48480079AB18 /* StatusTableViewCell.swift */; };
@@ -33,6 +34,7 @@
 		A40300B51F2F83F7001621FD /* Helper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Helper.swift; sourceTree = "<group>"; };
 		A40300B71F2F8AE3001621FD /* StatusViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StatusViewController.swift; sourceTree = "<group>"; };
 		A40300BB1F32779C001621FD /* StatusContextTableView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StatusContextTableView.swift; sourceTree = "<group>"; };
+		A407CABF1F8FFDA300D44CC1 /* MoreTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoreTableViewController.swift; sourceTree = "<group>"; };
 		A448F91E1F2DE3130001D2D0 /* NotificationViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NotificationViewController.swift; sourceTree = "<group>"; };
 		A44A78E91F2E2CC90079AB18 /* AccessInfo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AccessInfo.swift; path = Data/AccessInfo.swift; sourceTree = "<group>"; };
 		A44A78EB1F2F48480079AB18 /* StatusTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StatusTableViewCell.swift; sourceTree = "<group>"; };
@@ -96,6 +98,7 @@
 		A40300BA1F311C9C001621FD /* Tables */ = {
 			isa = PBXGroup;
 			children = (
+				A407CABF1F8FFDA300D44CC1 /* MoreTableViewController.swift */,
 				A448F91E1F2DE3130001D2D0 /* NotificationViewController.swift */,
 				A44A78EB1F2F48480079AB18 /* StatusTableViewCell.swift */,
 				A40300BB1F32779C001621FD /* StatusContextTableView.swift */,
@@ -175,12 +178,13 @@
 			isa = PBXProject;
 			attributes = {
 				LastSwiftUpdateCheck = 0830;
-				LastUpgradeCheck = 0830;
+				LastUpgradeCheck = 0900;
 				ORGANIZATIONNAME = "Calv Collins";
 				TargetAttributes = {
 					A4E9185C1F2D183300AF23ED = {
 						CreatedOnToolsVersion = 8.3.3;
 						DevelopmentTeam = ZVZE87R9PL;
+						LastSwiftMigration = 0900;
 						ProvisioningStyle = Automatic;
 					};
 				};
@@ -272,6 +276,7 @@
 				A4AF6A3B1F3919EE00AEB5C7 /* WebViewController.swift in Sources */,
 				A4A4FD3D1F40F657008FEAF8 /* NotificationTableViewCell.swift in Sources */,
 				A4E918611F2D183300AF23ED /* AppDelegate.swift in Sources */,
+				A407CAC01F8FFDA300D44CC1 /* MoreTableViewController.swift in Sources */,
 				A4AF6A391F38D7C600AEB5C7 /* ProfileViewController.swift in Sources */,
 				A40300BC1F32779C001621FD /* StatusContextTableView.swift in Sources */,
 				A44A78EC1F2F48480079AB18 /* StatusTableViewCell.swift in Sources */,
@@ -309,7 +314,9 @@
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
 				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
@@ -317,7 +324,11 @@
 				CLANG_WARN_ENUM_CONVERSION = YES;
 				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
@@ -360,7 +371,9 @@
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
 				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
@@ -368,7 +381,11 @@
 				CLANG_WARN_ENUM_CONVERSION = YES;
 				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
@@ -406,7 +423,8 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.calv.Swiftty;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 3.0;
+				SWIFT_SWIFT3_OBJC_INFERENCE = On;
+				SWIFT_VERSION = 4.0;
 			};
 			name = Debug;
 		};
@@ -422,7 +440,8 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.calv.Swiftty;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 3.0;
+				SWIFT_SWIFT3_OBJC_INFERENCE = On;
+				SWIFT_VERSION = 4.0;
 			};
 			name = Release;
 		};

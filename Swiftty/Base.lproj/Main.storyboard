@@ -916,7 +916,7 @@
         <!--More-->
         <scene sceneID="Bah-wW-BFV">
             <objects>
-                <tableViewController id="iDD-KW-wyD" sceneMemberID="viewController">
+                <tableViewController id="iDD-KW-wyD" customClass="MoreTableViewController" customModule="Swiftty" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="static" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" id="R0Y-wh-UQh">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -944,6 +944,29 @@
                                                 <constraint firstItem="fhw-aG-dvG" firstAttribute="height" secondItem="9vn-Pv-Z1Z" secondAttribute="height" id="ZQL-ky-qtM"/>
                                                 <constraint firstItem="fhw-aG-dvG" firstAttribute="centerX" secondItem="9vn-Pv-Z1Z" secondAttribute="centerX" id="f7O-89-aTa"/>
                                                 <constraint firstItem="fhw-aG-dvG" firstAttribute="centerY" secondItem="9vn-Pv-Z1Z" secondAttribute="centerY" id="zHW-ha-gld"/>
+                                            </constraints>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="Clear Login" id="1ZE-EL-NiL">
+                                        <rect key="frame" x="0.0" y="44" width="375" height="44"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="1ZE-EL-NiL" id="11q-yK-IWF">
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="43.5"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="uHb-fB-XLj">
+                                                    <rect key="frame" x="-0.5" y="-1" width="375" height="44"/>
+                                                    <state key="normal" title="Clear Login"/>
+                                                    <connections>
+                                                        <action selector="onClearLoginPress:" destination="iDD-KW-wyD" eventType="touchUpInside" id="uvO-3r-wNm"/>
+                                                    </connections>
+                                                </button>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstItem="uHb-fB-XLj" firstAttribute="centerX" secondItem="11q-yK-IWF" secondAttribute="centerX" id="Qhj-8o-iqo"/>
+                                                <constraint firstItem="uHb-fB-XLj" firstAttribute="width" secondItem="11q-yK-IWF" secondAttribute="width" id="Rcm-Qs-2sc"/>
+                                                <constraint firstItem="uHb-fB-XLj" firstAttribute="centerY" secondItem="11q-yK-IWF" secondAttribute="centerY" id="lCi-co-nmT"/>
+                                                <constraint firstItem="uHb-fB-XLj" firstAttribute="height" secondItem="11q-yK-IWF" secondAttribute="height" id="xJd-il-XH8"/>
                                             </constraints>
                                         </tableViewCellContentView>
                                     </tableViewCell>
