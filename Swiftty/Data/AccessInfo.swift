@@ -12,13 +12,13 @@ import os.log
 class AccessInfo: NSObject, NSCoding {
     
     var accessToken: String
+    var authCode: String
     var url: String
-    var user: String
     
     struct PropertyKey {
         static let accessToken = "access_token"
+        static let authCode = "auth_code"
         static let url = "url"
-        static let user = "user"
     }
     
     static let DocumentsDirectory = FileManager().urls(for: .documentDirectory, in: .userDomainMask).first!
@@ -26,8 +26,8 @@ class AccessInfo: NSObject, NSCoding {
     
     func encode(with aCoder: NSCoder) {
         aCoder.encode(accessToken, forKey: PropertyKey.accessToken)
+        aCoder.encode(authCode, forKey: PropertyKey.authCode)
         aCoder.encode(url, forKey: PropertyKey.url)
-        aCoder.encode(user, forKey: PropertyKey.user)
     }
     
     class func saveAccessInfo(info: AccessInfo) {
@@ -35,7 +35,7 @@ class AccessInfo: NSObject, NSCoding {
         if isSuccessful {
             print("saved")
         } else {
-            print("save fucked")
+            print("save failed")
         }
     }
     
@@ -57,26 +57,26 @@ class AccessInfo: NSObject, NSCoding {
             os_log("Unable to decode access token", log: OSLog.default, type: .debug)
             return nil
         }
+        guard let authCode = aDecoder.decodeObject(forKey: PropertyKey.authCode) as? String else {
+            os_log("Unable to decode refresh token", log: OSLog.default, type: .debug)
+            return nil
+        }
         guard let url = aDecoder.decodeObject(forKey: PropertyKey.url) as? String else {
             os_log("Unable to decode url", log: OSLog.default, type: .debug)
             return nil
         }
-        guard let user = aDecoder.decodeObject(forKey: PropertyKey.user) as? String else {
-            os_log("Unable to decode user", log: OSLog.default, type: .debug)
-            return nil
-        }
         
-        self.init(accessToken: accessToken, url: url, user: user)
+        self.init(accessToken: accessToken, authCode: authCode, url: url)
     }
     
-    init?(accessToken: String, url: String, user: String) {
+    init?(accessToken: String, authCode: String, url: String) {
         
-        if accessToken.isEmpty || url.isEmpty || user.isEmpty {
+        if accessToken.isEmpty || authCode.isEmpty || url.isEmpty {
             return nil
         }
         
         self.accessToken = accessToken
+        self.authCode = authCode
         self.url = url
-        self.user = user
     }
 }

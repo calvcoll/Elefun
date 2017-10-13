@@ -21,17 +21,19 @@ class RootViewController: UIViewController {
     }
     
     @IBOutlet weak var loginButton: UIButton!
-    @IBOutlet weak var userNameText: UITextField!
-    @IBOutlet weak var passwordText: UITextField!
     @IBOutlet weak var domainText: UITextField!
     @IBOutlet weak var indicator: UIActivityIndicatorView!
+    
+    private var auth_session: SFAuthenticationSession?
     
     private var username = ""
     private var password = ""
     
     static let LOGIN_SEGUE = "login_segue"
-    static let CLIENT_NAME = "Swiftty: (\(UIDevice.current.name))"
-    static let REDIRECT_URI = "urn:ietf:wg:oauth:2.0:oob" // specified by mastodon
+    static let APP_NAME = "Swiffty"
+    static let CLIENT_NAME = "\(RootViewController.APP_NAME): (\(UIDevice.current.name))"
+//    static let REDIRECT_URI = "urn:ietf:wg:oauth:2.0:oob" // specified by mastodon
+    static let REDIRECT_URI = "\(RootViewController.APP_NAME.lowercased())://authorized"
     static let PERMISSIONS = "read%20write%20follow"
     static var MASTODON_SETTINGS = MastodonSettings(url: "", client_id: "", client_secret: "", id: -1)
     
@@ -39,8 +41,7 @@ class RootViewController: UIViewController {
         super.viewDidLoad()
         
         indicator.isHidden = true
-
-        domainText.returnKeyType = UIReturnKeyType.done
+        domainText.returnKeyType = .done
         domainText.delegate = self
         
         if let info = AccessInfo.loadAccessInfo() {
@@ -89,25 +90,6 @@ class RootViewController: UIViewController {
     func prepareMastodon(url: String, sender: Any) {
         let url = prefixHTTP(url: url)
         
-//        let client = Client(baseURL: url)
-//        let request = Clients.register(
-//            clientName: RootViewController.CLIENT_NAME,
-//            scopes: [.read, .write, .follow]
-//        )
-//
-//        client.run(request) { (app, error) in
-//            if let error = error {
-//                print(error)
-//                self.onFailure()
-//            }
-//            if let app = app {
-//                RootViewController.MASTODON_SETTINGS = MastodonSettings(url: url, client_id: app.clientID, client_secret: app.clientSecret, id: app.id)
-//                self.onSecrets(url: url, sender: sender)
-//            } else {
-//                self.onFailure() // some reason always ends here, leaving for future fix
-//            }
-//        }
-        
         var request = URLRequest(url: URL(string: "\(url)/api/v1/apps")!)
         request.httpMethod = "POST"
         let postString = "client_name=\(RootViewController.CLIENT_NAME)&redirect_uris=\(RootViewController.REDIRECT_URI)&scopes=\(RootViewController.PERMISSIONS)"
@@ -146,6 +128,7 @@ class RootViewController: UIViewController {
         task.resume()
     }
     
+    @objc
     func onSecrets(url: String, sender: Any) {
         if let info = AccessInfo.loadAccessInfo() {
             print("using accessinfo")
@@ -154,56 +137,62 @@ class RootViewController: UIViewController {
         } else {
             
             //USING OAUTH
-            
             let oauth_url = URL(string: "\(url)/oauth/authorize?scope=\(RootViewController.PERMISSIONS)" +
                 "&response_type=code&redirect_uri=\(RootViewController.REDIRECT_URI)" +
                 "&client_id=\(RootViewController.MASTODON_SETTINGS.client_id)"
             )
             
-            SFAuthenticationSession(
+            self.auth_session = SFAuthenticationSession(
                 url: oauth_url!,
-                callbackURLScheme: "",
-                completionHandler: { (url, error) in
-//                        if error != nil {
-//                            Helper.createAlert(controller: self, title: "OAuth Erorr", message: "Didn't recieve oauth token", preferredStyle: .alert)
-//                        }
-//                        if let url = url {
-//                            print(url)
-//                        }
-                    print(url as Any,error as Any)
+                callbackURLScheme: nil,
+                completionHandler: { (completed_url, error) in
+                    if error != nil {
+                        Helper.createAlert(controller: self, title: "OAuth Error", message: "Didn't recieve oauth token", preferredStyle: .alert)
+                        self.onFailure()
+                    }
+                    if let completed_url = completed_url {
+                        print(completed_url.absoluteString)
+                        let url_components = URLComponents(string: completed_url.absoluteString)
+                        let auth_code = url_components?.queryItems?.first(where: { $0.name == "code" })?.value
+                        print(auth_code!)
+                        
+                        if let auth_code = auth_code {
+                            var request = URLRequest(url: URL(string: "\(url)/oauth/token")!)
+                            request.httpMethod = "POST"
+                            let postString = "grant_type=authorization_code" +
+                                "&client_id=\(RootViewController.MASTODON_SETTINGS.client_id)" +
+                                "&client_secret=\(RootViewController.MASTODON_SETTINGS.client_secret)" +
+                                "&code=\(auth_code)&redirect_uri=\(RootViewController.REDIRECT_URI)"
+                            request.httpBody = postString.data(using: .utf8)
+
+                            let task = URLSession.shared.dataTask(with: request) { data, response, error in
+                                let responseString = String(data: data!, encoding: .utf8)
+                                print(responseString!)
+                                
+                                let json = try? JSONSerialization.jsonObject(with: data!, options: [])
+                                
+                                if let json_dict = json as? [String: Any] {
+                                    print(json_dict)
+                                    let info = AccessInfo(accessToken: json_dict["access_token"] as! String, authCode: auth_code, url: url)
+                                    AccessInfo.saveAccessInfo(info: info!)
+                                    let client = Client(baseURL: url, accessToken: info!.accessToken)
+                                    DispatchQueue.main.async {
+                                        self.afterLogin(client: client, sender: sender)
+                                    }
+                                }
+                            }
+
+                            task.resume()
+                        } else {
+                            print("couldn't get refresh token")
+                        }
+                    }
                 }
-            ).start()
-            self.onFailure()
-            
-            // USING OLD AUTH
-//            DispatchQueue.main.async {
-//                let login = Login.silent(
-//                    clientID: RootViewController.MASTODON_SETTINGS.client_id,
-//                    clientSecret: RootViewController.MASTODON_SETTINGS.client_secret,
-//                    scopes: [.read, .write, .follow],
-//                    username: self.username,
-//                    password: self.password
-//                )
-//
-//                let client = Client(baseURL: url)
-//
-//                client.run(login) { loginSettings, error in
-//                    DispatchQueue.main.async {
-//                        if let loginSettings = loginSettings {
-//                            print("log in settings" + loginSettings.accessToken)
-//                            let info = AccessInfo(accessToken: loginSettings.accessToken, url: RootViewController.MASTODON_SETTINGS.url, user: self.username)
-//                            AccessInfo.saveAccessInfo(info: info!)
-//
-//                            client.accessToken = info!.accessToken
-//                            self.afterLogin(client: client, sender: sender)
-//                        }
-//                        if error != nil {
-//                            Helper.createAlert(controller: self, title: "Username/Password", message: "Username/Password Incorrect", preferredStyle: .alert)
-//                            self.onFailure()
-//                        }
-//                    }
-//                }
-//            }
+            )
+            let success = self.auth_session!.start()
+            if !success {
+                self.onFailure()
+            }
         }
     }
     
@@ -231,22 +220,14 @@ class RootViewController: UIViewController {
         let domain = domainText.text!
         let exists = domainExists(url: NSURL(string: prefixHTTP(url: domain))!)
         
-        username = self.userNameText.text!
-        password = self.passwordText.text!
-        
         print(exists)
         print(domain)
-        if (username.isEmpty || password.isEmpty) {
-            Helper.createAlert(controller: self, title: "No username/password", message: "You haven't entered a username, or a password.", preferredStyle: UIAlertControllerStyle.alert)
+        if (exists) {
+            prepareMastodon(url: domain, sender: sender)
+        }
+        else {
+            Helper.createAlert(controller: self, title: "Instance Failed", message: "We couldn't connect to this instance!", preferredStyle: UIAlertControllerStyle.alert)
             onFailure()
-        } else {
-            if (exists) {
-                prepareMastodon(url: domain, sender: sender)
-            }
-            else {
-                Helper.createAlert(controller: self, title: "Instance Failed", message: "We couldn't connect to this instance!", preferredStyle: UIAlertControllerStyle.alert)
-                onFailure()
-            }
         }
     }
     
@@ -274,11 +255,6 @@ class RootViewController: UIViewController {
 
 extension RootViewController: UITextFieldDelegate {
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-//        DispatchQueue.main.async(execute: {
-//            if self.view != nil {
-//                self.view.endEditing(true)
-//            }
-//        })
         textField.resignFirstResponder()
         return false
     }

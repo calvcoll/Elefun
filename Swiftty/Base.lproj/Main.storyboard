@@ -1035,7 +1035,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="8Mo-fT-ZYV">
-                                <rect key="frame" x="162" y="368.5" width="50" height="30"/>
+                                <rect key="frame" x="162" y="348.5" width="50" height="30"/>
                                 <constraints>
                                     <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="50" id="Blo-AN-pwr"/>
                                 </constraints>
@@ -1049,27 +1049,9 @@
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             </activityIndicatorView>
                             <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="mastodon.social" borderStyle="roundedRect" placeholder="Instance" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="TBr-Nn-utx">
-                                <rect key="frame" x="62" y="338.5" width="250" height="30"/>
+                                <rect key="frame" x="62" y="318.5" width="250" height="30"/>
                                 <constraints>
                                     <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="250" id="Qse-L9-mk6"/>
-                                </constraints>
-                                <nil key="textColor"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <textInputTraits key="textInputTraits" keyboardType="URL"/>
-                            </textField>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Password" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="tD5-3k-jH5">
-                                <rect key="frame" x="62" y="300.5" width="250" height="30"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="250" id="KqK-Ev-JVH"/>
-                                </constraints>
-                                <nil key="textColor"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <textInputTraits key="textInputTraits" secureTextEntry="YES"/>
-                            </textField>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Username" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="lIt-Yv-bcI">
-                                <rect key="frame" x="62" y="262.5" width="250" height="30"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="250" id="Ewi-ye-olu"/>
                                 </constraints>
                                 <nil key="textColor"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
@@ -1078,24 +1060,16 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="lIt-Yv-bcI" firstAttribute="width" secondItem="tD5-3k-jH5" secondAttribute="width" id="01D-UP-qvT"/>
-                            <constraint firstItem="tD5-3k-jH5" firstAttribute="width" secondItem="TBr-Nn-utx" secondAttribute="width" id="CJ5-oV-gyT"/>
                             <constraint firstItem="8Mo-fT-ZYV" firstAttribute="centerX" secondItem="TBr-Nn-utx" secondAttribute="centerX" id="FhO-5e-Zhw"/>
                             <constraint firstItem="TBr-Nn-utx" firstAttribute="centerX" secondItem="8yD-wX-2N7" secondAttribute="centerX" id="Hcf-wY-mE2"/>
-                            <constraint firstItem="tD5-3k-jH5" firstAttribute="centerX" secondItem="TBr-Nn-utx" secondAttribute="centerX" id="PrO-ci-Dt2"/>
-                            <constraint firstItem="tD5-3k-jH5" firstAttribute="top" secondItem="lIt-Yv-bcI" secondAttribute="bottom" constant="8" id="SbK-9c-t3j"/>
-                            <constraint firstItem="TBr-Nn-utx" firstAttribute="top" secondItem="tD5-3k-jH5" secondAttribute="bottom" constant="8" id="Uwn-36-daf"/>
                             <constraint firstItem="8Mo-fT-ZYV" firstAttribute="top" secondItem="TBr-Nn-utx" secondAttribute="bottom" id="XxW-am-L4u"/>
-                            <constraint firstItem="TBr-Nn-utx" firstAttribute="centerY" secondItem="8yD-wX-2N7" secondAttribute="centerY" constant="20" id="aR8-jp-CKZ"/>
-                            <constraint firstItem="lIt-Yv-bcI" firstAttribute="centerX" secondItem="tD5-3k-jH5" secondAttribute="centerX" id="mzx-SW-gqx"/>
+                            <constraint firstItem="TBr-Nn-utx" firstAttribute="centerY" secondItem="8yD-wX-2N7" secondAttribute="centerY" id="aR8-jp-CKZ"/>
                         </constraints>
                     </view>
                     <connections>
                         <outlet property="domainText" destination="TBr-Nn-utx" id="Mjx-N1-m4O"/>
                         <outlet property="indicator" destination="xM1-3a-aT7" id="uij-lC-L0L"/>
                         <outlet property="loginButton" destination="8Mo-fT-ZYV" id="6KA-N3-o1x"/>
-                        <outlet property="passwordText" destination="tD5-3k-jH5" id="oJd-IA-L0s"/>
-                        <outlet property="userNameText" destination="lIt-Yv-bcI" id="pbi-5D-dZq"/>
                         <segue destination="49e-Tb-3d3" kind="show" identifier="login_segue" id="EYI-Qb-vZB"/>
                     </connections>
                 </viewController>
@@ -1154,7 +1128,7 @@
     </resources>
     <inferredMetricsTieBreakers>
         <segue reference="UUg-VI-vY1"/>
-        <segue reference="bVw-8g-pPV"/>
+        <segue reference="rgH-K9-c4R"/>
         <segue reference="3A3-2C-rno"/>
         <segue reference="fCF-nh-q0v"/>
     </inferredMetricsTieBreakers>
