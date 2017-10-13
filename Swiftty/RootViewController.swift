@@ -155,21 +155,25 @@ class RootViewController: UIViewController {
             
             //USING OAUTH
             
-            let oauth_url = "\(url)/oauth/authorize?scope=\(RootViewController.PERMISSIONS)" +
-                            "&response_type=code&redirect_uri=\(RootViewController.REDIRECT_URI)" +
-                            "&client_id=\(RootViewController.MASTODON_SETTINGS.client_id)"
+            let oauth_url = URL(string: "\(url)/oauth/authorize?scope=\(RootViewController.PERMISSIONS)" +
+                "&response_type=code&redirect_uri=\(RootViewController.REDIRECT_URI)" +
+                "&client_id=\(RootViewController.MASTODON_SETTINGS.client_id)"
+            )
             
-            let session = SFAuthenticationSession(
-                url: URL(oauth_url),
-                callbackURLScheme: nil,
+            SFAuthenticationSession(
+                url: oauth_url!,
+                callbackURLScheme: "",
                 completionHandler: { (url, error) in
-                    if let error = error {
-                        Helper.createAlert(controller: self, title: "OAuth Erorr", message: "Didn't recieve oauth token", preferredStyle: .alert)
-                    }
-                    if let url = url {
-                        print(url)
-                    }
-            })
+//                        if error != nil {
+//                            Helper.createAlert(controller: self, title: "OAuth Erorr", message: "Didn't recieve oauth token", preferredStyle: .alert)
+//                        }
+//                        if let url = url {
+//                            print(url)
+//                        }
+                    print(url as Any,error as Any)
+                }
+            ).start()
+            self.onFailure()
             
             // USING OLD AUTH
 //            DispatchQueue.main.async {

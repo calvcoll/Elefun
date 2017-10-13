@@ -16,7 +16,6 @@ class WebViewController: UIViewController {
     var url: String!
     
     override func viewDidLoad() {
-        self.automaticallyAdjustsScrollViewInsets = false
         self.navigationItem.title = self.url
         
         let request = URLRequest(url: URL(string: self.url)!)
