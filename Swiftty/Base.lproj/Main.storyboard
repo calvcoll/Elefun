@@ -980,6 +980,9 @@
                     </tableView>
                     <navigationItem key="navigationItem" title="More" id="gQs-6j-5uQ"/>
                     <simulatedTabBarMetrics key="simulatedBottomBarMetrics"/>
+                    <connections>
+                        <segue destination="zb3-YW-dJ5" kind="presentation" identifier="home_refresh" modalPresentationStyle="overCurrentContext" id="tLm-PS-bd1"/>
+                    </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="cTG-9l-4NN" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>

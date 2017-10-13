@@ -9,6 +9,8 @@
 import UIKit
 
 class MoreTableViewController: UITableViewController {
+    
+    static let HOME_REFRESH = "home_refresh"
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -21,16 +23,18 @@ class MoreTableViewController: UITableViewController {
     }
     
     @IBAction func onClearLoginPress(_ sender: UIButton) {
-        var success = true
         let alert = UIAlertController(title: "", message: "", preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: "Delete", style: .destructive, handler: { (action) in
-            success = AccessInfo.clearAccessInfo()
+            let success = AccessInfo.clearAccessInfo()
+            if !success {
+                Helper.createAlert(controller: self, title: "Deletion failed!", message: "Session information could not be deleted.", preferredStyle: .alert)
+            } else {
+                self.performSegue(withIdentifier: MoreTableViewController.HOME_REFRESH, sender: self)
+            }
         }))
         alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
         self.present(alert, animated: true) {
-            if !success {
-                Helper.createAlert(controller: self, title: "Deletion failed!", message: "Session information could not be deleted.", preferredStyle: .alert)
-            }
+
         }
     }
     

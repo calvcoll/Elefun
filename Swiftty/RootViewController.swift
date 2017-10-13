@@ -7,6 +7,8 @@
 //
 
 import UIKit
+import SafariServices
+
 import MastodonKit
 
 class RootViewController: UIViewController {
@@ -28,7 +30,7 @@ class RootViewController: UIViewController {
     private var password = ""
     
     static let LOGIN_SEGUE = "login_segue"
-    static let CLIENT_NAME = "Swiftty"
+    static let CLIENT_NAME = "Swiftty: (\(UIDevice.current.name))"
     static let REDIRECT_URI = "urn:ietf:wg:oauth:2.0:oob" // specified by mastodon
     static let PERMISSIONS = "read%20write%20follow"
     static var MASTODON_SETTINGS = MastodonSettings(url: "", client_id: "", client_secret: "", id: -1)
@@ -133,6 +135,7 @@ class RootViewController: UIViewController {
                     let json = try? JSONSerialization.jsonObject(with: data, options: [])
 
                     if let json_dict = json as? [String: Any] {
+                        print(json_dict)
                         RootViewController.MASTODON_SETTINGS = MastodonSettings(url: url, client_id: json_dict["client_id"]! as! String, client_secret: json_dict["client_secret"]! as! String, id: Int(json_dict["id"] as! String)!)
                     }
 
@@ -149,34 +152,54 @@ class RootViewController: UIViewController {
             let client = Client(baseURL: url, accessToken: info.accessToken)
             self.afterLogin(client: client, sender: sender)
         } else {
-            DispatchQueue.main.async {
-                let login = Login.silent(
-                    clientID: RootViewController.MASTODON_SETTINGS.client_id,
-                    clientSecret: RootViewController.MASTODON_SETTINGS.client_secret,
-                    scopes: [.read, .write, .follow],
-                    username: self.username,
-                    password: self.password
-                )
-                
-                let client = Client(baseURL: url)
-                
-                client.run(login) { loginSettings, error in
-                    DispatchQueue.main.async {
-                        if let loginSettings = loginSettings {
-                            print("log in settings" + loginSettings.accessToken)
-                            let info = AccessInfo(accessToken: loginSettings.accessToken, url: RootViewController.MASTODON_SETTINGS.url, user: self.username)
-                            AccessInfo.saveAccessInfo(info: info!)
-                            
-                            client.accessToken = info!.accessToken
-                            self.afterLogin(client: client, sender: sender)
-                        }
-                        if error != nil {
-                            Helper.createAlert(controller: self, title: "Username/Password", message: "Username/Password Incorrect", preferredStyle: .alert)
-                            self.onFailure()
-                        }
+            
+            //USING OAUTH
+            
+            let oauth_url = "\(url)/oauth/authorize?scope=\(RootViewController.PERMISSIONS)" +
+                            "&response_type=code&redirect_uri=\(RootViewController.REDIRECT_URI)" +
+                            "&client_id=\(RootViewController.MASTODON_SETTINGS.client_id)"
+            
+            let session = SFAuthenticationSession(
+                url: URL(oauth_url),
+                callbackURLScheme: nil,
+                completionHandler: { (url, error) in
+                    if let error = error {
+                        Helper.createAlert(controller: self, title: "OAuth Erorr", message: "Didn't recieve oauth token", preferredStyle: .alert)
                     }
-                }
-            }
+                    if let url = url {
+                        print(url)
+                    }
+            })
+            
+            // USING OLD AUTH
+//            DispatchQueue.main.async {
+//                let login = Login.silent(
+//                    clientID: RootViewController.MASTODON_SETTINGS.client_id,
+//                    clientSecret: RootViewController.MASTODON_SETTINGS.client_secret,
+//                    scopes: [.read, .write, .follow],
+//                    username: self.username,
+//                    password: self.password
+//                )
+//
+//                let client = Client(baseURL: url)
+//
+//                client.run(login) { loginSettings, error in
+//                    DispatchQueue.main.async {
+//                        if let loginSettings = loginSettings {
+//                            print("log in settings" + loginSettings.accessToken)
+//                            let info = AccessInfo(accessToken: loginSettings.accessToken, url: RootViewController.MASTODON_SETTINGS.url, user: self.username)
+//                            AccessInfo.saveAccessInfo(info: info!)
+//
+//                            client.accessToken = info!.accessToken
+//                            self.afterLogin(client: client, sender: sender)
+//                        }
+//                        if error != nil {
+//                            Helper.createAlert(controller: self, title: "Username/Password", message: "Username/Password Incorrect", preferredStyle: .alert)
+//                            self.onFailure()
+//                        }
+//                    }
+//                }
+//            }
         }
     }
     
