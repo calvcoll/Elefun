@@ -240,6 +240,9 @@ class RootViewController: UIViewController {
         }
     }
     
+    override func performSegue(withIdentifier identifier: String, sender: Any?) {
+        super.performSegue(withIdentifier: identifier, sender: sender)
+    }
 
     /*
     // MARK: - Navigation
