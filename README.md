@@ -1,3 +1,5 @@
+## Development stopped due to changes to Mastodon and most Swift API wrappers not updated.
+
 # Swiffty
 A mastodon client written in swift for ios
 
