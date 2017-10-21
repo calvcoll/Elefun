@@ -29,7 +29,7 @@
         <!--Toot-->
         <scene sceneID="pb9-AY-SUP">
             <objects>
-                <viewController title="Toot" id="rVb-bd-g3S" customClass="TootViewController" customModule="Swiftty" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController title="Toot" id="rVb-bd-g3S" customClass="TootViewController" customModule="Elefun" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="B1K-ZU-6mc">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -153,7 +153,7 @@
         <!--Timeline-->
         <scene sceneID="uPz-Gs-wfo">
             <objects>
-                <viewController id="AIN-55-aOu" customClass="TimelineViewController" customModule="Swiftty" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="AIN-55-aOu" customClass="TimelineViewController" customModule="Elefun" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="GSO-gu-dTr">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -163,7 +163,7 @@
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="NotificationViewCell" rowHeight="75" id="NFY-l3-QeK" customClass="NotificationTableViewCell" customModule="Swiftty" customModuleProvider="target">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="NotificationViewCell" rowHeight="75" id="NFY-l3-QeK" customClass="NotificationTableViewCell" customModule="Elefun" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="28" width="375" height="75"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="NFY-l3-QeK" id="dG6-1h-VEL">
@@ -279,7 +279,7 @@
         <!--Status-->
         <scene sceneID="iuc-6p-VQ1">
             <objects>
-                <viewController automaticallyAdjustsScrollViewInsets="NO" id="iqj-v2-gXn" customClass="StatusViewController" customModule="Swiftty" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController automaticallyAdjustsScrollViewInsets="NO" id="iqj-v2-gXn" customClass="StatusViewController" customModule="Elefun" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="swp-Vy-QVN">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -423,11 +423,11 @@
                                             <constraint firstItem="5Fd-MW-rQN" firstAttribute="top" secondItem="qWW-AM-Zce" secondAttribute="top" id="onb-nX-iYb"/>
                                         </constraints>
                                     </scrollView>
-                                    <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="k9r-Qu-ORi" customClass="StatusContextTableView" customModule="Swiftty" customModuleProvider="target">
+                                    <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="k9r-Qu-ORi" customClass="StatusContextTableView" customModule="Elefun" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="277" width="375" height="277"/>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         <prototypes>
-                                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="replyStatuses" rowHeight="75" id="0x8-v9-dOO" customClass="NotificationTableViewCell" customModule="Swiftty" customModuleProvider="target">
+                                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="replyStatuses" rowHeight="75" id="0x8-v9-dOO" customClass="NotificationTableViewCell" customModule="Elefun" customModuleProvider="target">
                                                 <rect key="frame" x="0.0" y="28" width="375" height="75"/>
                                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="0x8-v9-dOO" id="iGy-If-LW7">
@@ -556,7 +556,7 @@
         <!--Link-->
         <scene sceneID="yhA-Yp-81P">
             <objects>
-                <viewController title="Link" id="59a-Z9-8uI" customClass="WebViewController" customModule="Swiftty" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController title="Link" id="59a-Z9-8uI" customClass="WebViewController" customModule="Elefun" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="k4i-gt-dlY">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -587,13 +587,13 @@
         <!--Notifications-->
         <scene sceneID="lpa-ta-JO8">
             <objects>
-                <tableViewController id="2sM-ff-1ye" customClass="NotficationViewController" customModule="Swiftty" customModuleProvider="target" sceneMemberID="viewController">
+                <tableViewController id="2sM-ff-1ye" customClass="NotficationViewController" customModule="Elefun" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" id="Uag-0N-5ka">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="NotificationViewCell" rowHeight="75" id="4xP-NR-RaP" customClass="NotificationTableViewCell" customModule="Swiftty" customModuleProvider="target">
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="NotificationViewCell" rowHeight="75" id="4xP-NR-RaP" customClass="NotificationTableViewCell" customModule="Elefun" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="28" width="375" height="75"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="4xP-NR-RaP" id="aVy-zf-JAC">
@@ -689,7 +689,7 @@
         <!--Profile-->
         <scene sceneID="RgJ-0w-LEI">
             <objects>
-                <viewController id="9zr-Us-hpR" customClass="ProfileViewController" customModule="Swiftty" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="9zr-Us-hpR" customClass="ProfileViewController" customModule="Elefun" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="Bal-sD-YOC">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -765,11 +765,11 @@
                                             <constraint firstItem="aqG-k1-pxP" firstAttribute="top" secondItem="l1A-aD-4u8" secondAttribute="bottom" id="ty8-el-3rZ"/>
                                         </constraints>
                                     </view>
-                                    <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="Tlk-im-8Qn" customClass="StatusContextTableView" customModule="Swiftty" customModuleProvider="target">
+                                    <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="Tlk-im-8Qn" customClass="StatusContextTableView" customModule="Elefun" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="277" width="375" height="277"/>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         <prototypes>
-                                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="replyStatuses" rowHeight="75" id="TJP-Nf-teY" customClass="NotificationTableViewCell" customModule="Swiftty" customModuleProvider="target">
+                                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="replyStatuses" rowHeight="75" id="TJP-Nf-teY" customClass="NotificationTableViewCell" customModule="Elefun" customModuleProvider="target">
                                                 <rect key="frame" x="0.0" y="28" width="375" height="75"/>
                                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="TJP-Nf-teY" id="88M-LN-btw">
@@ -901,7 +901,7 @@
         <!--More-->
         <scene sceneID="Bah-wW-BFV">
             <objects>
-                <tableViewController id="iDD-KW-wyD" customClass="MoreTableViewController" customModule="Swiftty" customModuleProvider="target" sceneMemberID="viewController">
+                <tableViewController id="iDD-KW-wyD" customClass="MoreTableViewController" customModule="Elefun" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="static" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" id="R0Y-wh-UQh">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -965,9 +965,6 @@
                     </tableView>
                     <navigationItem key="navigationItem" title="More" id="gQs-6j-5uQ"/>
                     <simulatedTabBarMetrics key="simulatedBottomBarMetrics"/>
-                    <connections>
-                        <segue destination="zb3-YW-dJ5" kind="presentation" identifier="home_refresh" modalPresentationStyle="overCurrentContext" id="tLm-PS-bd1"/>
-                    </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="cTG-9l-4NN" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -1007,7 +1004,7 @@
         <!--Root View Controller-->
         <scene sceneID="IAy-zR-b1X">
             <objects>
-                <viewController title="Root View Controller" id="zb3-YW-dJ5" customClass="RootViewController" customModule="Swiftty" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController title="Root View Controller" id="zb3-YW-dJ5" customClass="RootViewController" customModule="Elefun" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="8yD-wX-2N7">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>

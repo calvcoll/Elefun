@@ -9,8 +9,6 @@
 import UIKit
 
 class MoreTableViewController: UITableViewController {
-    
-    static let HOME_REFRESH = "home_refresh"
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -33,9 +31,7 @@ class MoreTableViewController: UITableViewController {
             }
         }))
         alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
-        self.present(alert, animated: true) {
-
-        }
+        self.present(alert, animated: true, completion: nil)
     }
     
 
