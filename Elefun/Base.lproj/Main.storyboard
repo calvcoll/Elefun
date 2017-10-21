@@ -981,7 +981,7 @@
                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" editable="NO" textAlignment="center" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hGd-mL-3l3">
                                 <rect key="frame" x="-0.5" y="64" width="375" height="554"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                <string key="text">App Icon by Daniela Castro on Unsplash. Compose Icon made by "Madebyoliver" from www.flaticon.com. Like Icon made by "PixelBuddha" from www.flaticon.com. Retoot Icon made by "Freepik" from www.flaticon.com. Tick Icon made by "Madebyoliver" from www.flaticon.com.</string>
+                                <string key="text">App Icon by Tanel Teemusk on Flickr. Compose Icon made by "Madebyoliver" from www.flaticon.com. Like Icon made by "PixelBuddha" from www.flaticon.com. Retoot Icon made by "Freepik" from www.flaticon.com. Tick Icon made by "Madebyoliver" from www.flaticon.com. Camera Icon made by "SmashIcons" from www.flaticon.com.</string>
                                 <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
@@ -1106,6 +1106,6 @@
         <segue reference="UUg-VI-vY1"/>
         <segue reference="rgH-K9-c4R"/>
         <segue reference="Ua4-sa-ldu"/>
-        <segue reference="Nfr-Ik-21v"/>
+        <segue reference="fCF-nh-q0v"/>
     </inferredMetricsTieBreakers>
 </document>
