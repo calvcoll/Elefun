@@ -23,13 +23,13 @@ class MoreTableViewController: UITableViewController {
     }
     
     @IBAction func onClearLoginPress(_ sender: UIButton) {
-        let alert = UIAlertController(title: "", message: "", preferredStyle: .alert)
+        let alert = UIAlertController(title: "Delete Login Data", message: "This will require you to reauthenticate.", preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: "Delete", style: .destructive, handler: { (action) in
             let success = AccessInfo.clearAccessInfo()
             if !success {
                 Helper.createAlert(controller: self, title: "Deletion failed!", message: "Session information could not be deleted.", preferredStyle: .alert)
             } else {
-                self.performSegue(withIdentifier: MoreTableViewController.HOME_REFRESH, sender: self)
+                self.view.window?.rootViewController?.dismiss(animated: true, completion: nil)
             }
         }))
         alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))

@@ -37,8 +37,8 @@ class RootViewController: UIViewController {
     static let PERMISSIONS = "read%20write%20follow"
     static var MASTODON_SETTINGS = MastodonSettings(url: "", client_id: "", client_secret: "", id: -1)
     
-    override func viewDidLoad() {
-        super.viewDidLoad()
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
         
         indicator.isHidden = true
         domainText.returnKeyType = .done
@@ -149,7 +149,7 @@ class RootViewController: UIViewController {
                 completionHandler: { (completed_url, error) in
                     if error != nil {
                         Helper.createAlert(controller: self, title: "OAuth Error", message: "Didn't recieve oauth token", preferredStyle: .alert)
-                        self.onFailure()
+                        self.onCompletion()
                     }
                     if let completed_url = completed_url {
                         print(completed_url.absoluteString)
@@ -192,7 +192,7 @@ class RootViewController: UIViewController {
             )
             let success = self.auth_session!.start()
             if !success {
-                self.onFailure()
+                self.onCompletion()
             }
         }
     }
@@ -210,7 +210,8 @@ class RootViewController: UIViewController {
                 if (account != nil) {
                     print(account!.displayName)
                 }
-                self.performSegue(withIdentifier: RootViewController.LOGIN_SEGUE, sender: sender)
+                self.onCompletion()
+                self.view.window?.rootViewController?.performSegue(withIdentifier: RootViewController.LOGIN_SEGUE, sender: nil)
             }
         }
     }
@@ -227,7 +228,7 @@ class RootViewController: UIViewController {
         }
         else {
             Helper.createAlert(controller: self, title: "Instance Failed", message: "We couldn't connect to this instance!", preferredStyle: UIAlertControllerStyle.alert)
-            onFailure()
+            onCompletion()
         }
     }
     
@@ -238,8 +239,9 @@ class RootViewController: UIViewController {
         indicator.startAnimating()
     }
     
-    func onFailure() {
+    func onCompletion() {
         DispatchQueue.main.async {
+            self.auth_session = nil
             self.indicator.stopAnimating()
             self.indicator.isHidden = true
             self.domainText.isEnabled = true
