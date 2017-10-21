@@ -1,6 +1,4 @@
-## Development stopped due to changes to Mastodon and most Swift API wrappers not updated.
-
-# Swiffty
+# Elefun
 A mastodon client written in swift for ios
 
 # Screenshot
