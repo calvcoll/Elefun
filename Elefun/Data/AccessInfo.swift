@@ -53,15 +53,10 @@ class AccessInfo: NSObject, NSCoding {
     }
     
     required convenience init?(coder aDecoder: NSCoder) {
-        guard let accessToken = aDecoder.decodeObject(forKey: PropertyKey.accessToken) as? String else {
-            os_log("Unable to decode access token", log: OSLog.default, type: .debug)
-            return nil
-        }
-        guard let authCode = aDecoder.decodeObject(forKey: PropertyKey.authCode) as? String else {
-            os_log("Unable to decode refresh token", log: OSLog.default, type: .debug)
-            return nil
-        }
-        guard let url = aDecoder.decodeObject(forKey: PropertyKey.url) as? String else {
+        guard let accessToken = aDecoder.decodeObject(forKey: PropertyKey.accessToken) as? String,
+        let authCode = aDecoder.decodeObject(forKey: PropertyKey.authCode) as? String,
+        let url = aDecoder.decodeObject(forKey: PropertyKey.url) as? String
+        else {
             os_log("Unable to decode url", log: OSLog.default, type: .debug)
             return nil
         }
